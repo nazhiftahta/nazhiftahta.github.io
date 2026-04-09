@@ -17,781 +17,151 @@
     --text: #e8e8f0;
     --text-muted: #888899;
     --text-dim: #555566;
-    --glow: rgba(108,99,255,0.15);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* NOISE TEXTURE */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--text);
-    text-decoration: none;
-    letter-spacing: -0.5px;
-  }
-
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,15,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--text); text-decoration: none; }
   .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    transition: color 0.2s;
-  }
-
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 120px 60px 80px;
-    position: relative;
-    overflow: hidden;
-  }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(108,99,255,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,212,170,0.05) 0%, transparent 60%); }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; opacity: 0.2; mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%); }
+  .hero-content { position: relative; z-index: 1; max-width: 1200px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 80px; align-items: center; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.3); padding: 6px 16px; border-radius: 100px; font-size: 13px; color: var(--accent); margin-bottom: 24px; font-weight: 500; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+  .hero-name { font-family: 'Syne', sans-serif; font-size: clamp(40px, 4.5vw, 62px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 14px; }
+  .hero-name .line2 { display: block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-role { font-size: 14px; font-weight: 600; color: var(--accent2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-desc { color: var(--text-muted); font-size: 15.5px; line-height: 1.8; margin-bottom: 36px; max-width: 560px; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; box-shadow: 0 0 30px rgba(108,99,255,0.3); }
+  .btn-primary:hover { background: #7d76ff; transform: translateY(-2px); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text); padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 500; font-size: 14px; border: 1px solid var(--border); transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(108,99,255,0.08) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,212,170,0.05) 0%, transparent 60%);
-  }
-  
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 60px 60px;
-    opacity: 0.2;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(108,99,255,0.1);
-    border: 1px solid rgba(108,99,255,0.3);
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 13px;
-    color: var(--accent);
-    margin-bottom: 24px;
-    font-weight: 500;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-name {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(42px, 5vw, 68px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin-bottom: 20px;
-  }
-
-  .hero-name .line2 {
-    display: block;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-desc {
-    color: var(--text-muted);
-    font-size: 17px;
-    line-height: 1.7;
-    margin-bottom: 36px;
-    max-width: 480px;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    transition: all 0.2s;
-    box-shadow: 0 0 30px rgba(108,99,255,0.3);
-  }
-
-  .btn-primary:hover {
-    background: #7d76ff;
-    transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(108,99,255,0.5);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--text);
-    padding: 14px 28px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* HERO RIGHT */
-  .hero-right {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .stat-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .stat-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-  }
-
-  .stat-card.accent { border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.05); }
-  .stat-card.accent2 { border-color: rgba(0,212,170,0.4); background: rgba(0,212,170,0.05); }
-
-  .stat-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
+  .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; transition: all 0.2s; }
+  .stat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .stat-card.c1 { border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.05); }
+  .stat-card.c2 { border-color: rgba(0,212,170,0.4); background: rgba(0,212,170,0.05); }
+  .stat-number { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
   .stat-number.purple { color: var(--accent); }
   .stat-number.teal { color: var(--accent2); }
+  .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
 
-  .stat-label {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
+  .sw { padding: 90px 60px; }
+  .sw.alt { background: var(--bg2); }
+  .si { max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
+  .section-desc { color: var(--text-muted); font-size: 15px; max-width: 500px; line-height: 1.7; margin-bottom: 48px; }
+  .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
 
-  .cert-strip {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .skills-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .skills-group { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 30px; transition: border-color 0.3s; }
+  .skills-group:hover { border-color: var(--accent); }
+  .sg-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+  .sg-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .skill-row { margin-bottom: 16px; }
+  .skill-row:last-child { margin-bottom: 0; }
+  .skill-row-label { font-size: 11px; font-weight: 700; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-size: 12px; padding: 4px 12px; border-radius: 100px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-muted); font-weight: 500; transition: all 0.2s; }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .tag.a { background: rgba(108,99,255,0.1); border-color: rgba(108,99,255,0.3); color: var(--accent); }
+  .tag.b { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.3); color: var(--accent2); }
+  .tag.c { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); color: var(--accent3); }
 
-  .cert-badge {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 26px; transition: all 0.3s; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
+  .project-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 20px 60px rgba(108,99,255,0.1); }
+  .project-card:hover::before { opacity: 1; }
+  .project-card.featured { grid-column: span 2; background: linear-gradient(135deg, rgba(108,99,255,0.06) 0%, rgba(0,212,170,0.04) 100%); border-color: rgba(108,99,255,0.25); }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; }
+  .project-emoji { width: 46px; height: 46px; background: rgba(108,99,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .project-link-btn { width: 32px; height: 32px; border-radius: 9px; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 13px; color: var(--text-muted); transition: all 0.2s; }
+  .project-link-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .project-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.3; }
+  .project-desc { color: var(--text-muted); font-size: 13px; line-height: 1.7; flex: 1; }
+  .project-date { font-size: 11px; color: var(--text-dim); font-weight: 500; }
 
-  .cert-badge.ms { background: rgba(0,120,212,0.15); }
-  .cert-badge.ibm { background: rgba(0,110,255,0.15); }
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent); }
+  .timeline-item { position: relative; padding: 0 0 38px 26px; opacity: 0; transform: translateX(-16px); transition: all 0.5s ease; }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot { position: absolute; left: -7px; top: 5px; width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); box-shadow: 0 0 10px rgba(108,99,255,0.5); }
+  .timeline-dot.t { background: var(--accent2); box-shadow: 0 0 10px rgba(0,212,170,0.5); }
+  .timeline-period { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+  .timeline-role { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 3px; }
+  .timeline-org { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+  .timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .timeline-bullets li { font-size: 13px; color: var(--text-muted); padding-left: 16px; position: relative; line-height: 1.6; }
+  .timeline-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent2); font-size: 11px; top: 2px; }
 
-  .cert-info { flex: 1; }
-  .cert-name { font-size: 13px; font-weight: 600; color: var(--text); }
-  .cert-issuer { font-size: 12px; color: var(--text-muted); }
-
-  .cert-score {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--accent2);
-  }
-
-  /* SECTIONS */
-  section {
-    padding: 100px 60px;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .section-label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 800;
-    letter-spacing: -1.5px;
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-
-  .section-desc {
-    color: var(--text-muted);
-    font-size: 16px;
-    max-width: 520px;
-    line-height: 1.7;
-    margin-bottom: 60px;
-  }
-
-  /* SKILLS */
-  #skills { background: var(--bg2); max-width: 100%; padding: 100px 60px; }
-  #skills .inner { max-width: 1200px; margin: 0 auto; }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-
-  .skill-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .skill-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .skill-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-  .skill-card:hover::before { opacity: 1; }
-
-  .skill-icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-bottom: 16px;
-    background: rgba(108,99,255,0.1);
-  }
-
-  .skill-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tag {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 100px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .tag.accent { background: rgba(108,99,255,0.1); border-color: rgba(108,99,255,0.3); color: var(--accent); }
-  .tag.teal { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.3); color: var(--accent2); }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
-  }
-
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(108,99,255,0.15);
-  }
-
-  .project-card.featured {
-    grid-column: span 2;
-    background: linear-gradient(135deg, rgba(108,99,255,0.08) 0%, rgba(0,212,170,0.05) 100%);
-    border-color: rgba(108,99,255,0.3);
-  }
-
-  .project-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .project-emoji {
-    width: 52px; height: 52px;
-    background: rgba(108,99,255,0.1);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    flex-shrink: 0;
-  }
-
-  .project-links { display: flex; gap: 8px; }
-
-  .project-link {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 16px;
-    transition: all 0.2s;
-    color: var(--text-muted);
-  }
-
-  .project-link:hover { border-color: var(--accent); color: var(--accent); }
-
-  .project-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.3;
-  }
-
-  .project-desc {
-    color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.7;
-    flex: 1;
-  }
-
-  .project-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .project-date {
-    font-size: 12px;
-    color: var(--text-dim);
-    font-weight: 500;
-  }
-
-  /* EXPERIENCE */
-  .timeline {
-    position: relative;
-    padding-left: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
-  }
-
-  .timeline-item {
-    position: relative;
-    padding: 0 0 40px 32px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.5s ease;
-  }
-
-  .timeline-item.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .timeline-dot {
-    position: absolute;
-    left: -8px;
-    top: 6px;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 3px solid var(--bg);
-    box-shadow: 0 0 12px rgba(108,99,255,0.5);
-  }
-
-  .timeline-period {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .timeline-role {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-
-  .timeline-org {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-    font-weight: 500;
-  }
-
-  .timeline-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .timeline-bullets li {
-    font-size: 14px;
-    color: var(--text-muted);
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .timeline-bullets li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--accent2);
-    font-size: 12px;
-  }
-
-  /* EDUCATION & CERTS */
-  .edu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .edu-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    transition: all 0.3s;
-  }
-
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 0; }
+  .edu-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; transition: all 0.3s; }
   .edu-card:hover { border-color: var(--accent2); transform: translateY(-3px); }
+  .edu-icon { font-size: 28px; margin-bottom: 14px; }
+  .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+  .edu-school { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+  .edu-meta { display: flex; justify-content: space-between; align-items: center; }
+  .edu-period { font-size: 11px; color: var(--text-dim); }
+  .edu-gpa { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent2); }
 
-  .edu-icon { font-size: 32px; margin-bottom: 16px; }
+  .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; transition: all 0.3s; }
+  .cert-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .cert-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; background: rgba(108,99,255,0.1); }
+  .cert-name { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 5px; }
+  .cert-issuer { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+  .cert-score { font-size: 12px; font-weight: 700; color: var(--accent2); margin-top: 5px; }
 
-  .edu-degree {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    margin-bottom: 4px;
-  }
+  .org-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .org-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; transition: all 0.3s; }
+  .org-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .org-role { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .org-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; line-height: 1.3; margin-bottom: 6px; }
+  .org-where { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .org-period { font-size: 11px; color: var(--text-dim); }
 
-  .edu-school {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-  }
+  .contact-wrap { text-align: center; padding: 90px 60px; background: var(--bg2); }
+  .contact-title { font-family: 'Syne', sans-serif; font-size: clamp(30px, 4vw, 52px); font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px; }
+  .contact-title span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .contact-desc { color: var(--text-muted); font-size: 15px; max-width: 420px; margin: 0 auto 40px; line-height: 1.7; }
+  .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+  .contact-link { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px 20px; border-radius: 13px; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .contact-meta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 
-  .edu-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  footer { text-align: center; padding: 26px 60px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 13px; }
 
-  .edu-period {
-    font-size: 12px;
-    color: var(--text-dim);
-  }
+  .fade-up { opacity: 0; transform: translateY(22px); transition: all 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  .edu-gpa {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--accent2);
-  }
-
-  .cert-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 24px;
-  }
-
-  .cert-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    transition: all 0.3s;
-  }
-
-  .cert-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-  .cert-card-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-    background: rgba(108,99,255,0.1);
-  }
-
-  .cert-card-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.4;
-    margin-bottom: 4px;
-  }
-
-  .cert-card-issuer {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* CONTACT */
-  #contact { background: var(--bg2); max-width: 100%; padding: 100px 60px; }
-  #contact .inner { max-width: 1200px; margin: 0 auto; text-align: center; }
-
-  .contact-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(36px, 5vw, 60px);
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  .contact-title span {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .contact-desc {
-    color: var(--text-muted);
-    font-size: 17px;
-    max-width: 480px;
-    margin: 0 auto 48px;
-    line-height: 1.7;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 60px;
-  }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 14px 24px;
-    border-radius: 14px;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.2s;
-  }
-
-  .contact-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 32px 60px;
-    border-top: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: 14px;
-  }
-
-  /* ANIMATIONS */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-  }
-
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* DIVIDER */
-  .section-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
+  @media (max-width: 900px) {
+    nav { padding: 14px 24px; }
     .nav-links { display: none; }
     .hero { padding: 100px 24px 60px; }
-    .hero-content { grid-template-columns: 1fr; gap: 48px; }
-    section { padding: 60px 24px; }
-    #skills, #contact { padding: 60px 24px; }
-    .projects-grid { grid-template-columns: 1fr; }
+    .hero-content { grid-template-columns: 1fr; gap: 40px; }
+    .sw { padding: 60px 24px; }
+    .contact-wrap { padding: 60px 24px; }
+    .projects-grid, .skills-columns, .edu-grid, .cert-grid, .org-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: span 1; }
-    .edu-grid, .cert-cards { grid-template-columns: 1fr; }
     .stat-cards { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">NT<span>.</span></a>
   <ul class="nav-links">
@@ -799,6 +169,8 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#organizations">Organizations</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -808,367 +180,307 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-left">
-      <div class="hero-tag">Available for freelance & internship</div>
-      <h1 class="hero-name">
-        Nazhif Tahta
-        <span class="line2">'Aunillah</span>
-      </h1>
-      <p class="hero-desc">
-        Data Science undergraduate at Telkom University building AI-powered solutions. 
-        Passionate about machine learning, LLM evaluation, and turning data into meaningful impact.
-      </p>
+    <div>
+      <div class="hero-tag">Open to freelance · internship · collaboration</div>
+      <h1 class="hero-name">Nazhif Tahta<span class="line2">'Aunillah</span></h1>
+      <p class="hero-role">Data Scientist · AI Specialist · ML Engineer</p>
+      <p class="hero-desc">Data Science undergraduate at Telkom University (GPA 3.68/4.00) with hands-on experience building AI-powered applications — from an LLM-powered student performance system to an IBM Granite-based AI assistant for product managers. Proficient in Python, SQL, TensorFlow, and machine learning. Currently serving as Chairman of the Data Science Student Association. Highly motivated, a fast learner, and committed to delivering quality work across data, AI, and software engineering projects.</p>
       <div class="hero-cta">
-        <a href="https://github.com/nazhiftahta" class="btn-primary" target="_blank">
-          ⚡ View GitHub
-        </a>
-        <a href="https://linkedin.com/in/nazhif-tahta" class="btn-secondary" target="_blank">
-          → LinkedIn
-        </a>
+        <a href="https://github.com/nazhiftahta" class="btn-primary" target="_blank">⚡ GitHub</a>
+        <a href="https://linkedin.com/in/nazhif-tahta" class="btn-secondary" target="_blank">→ LinkedIn</a>
+        <a href="mailto:aunillahtahta21@gmail.com" class="btn-secondary">✉ Email</a>
       </div>
     </div>
-
-    <div class="hero-right">
-      <div class="stat-cards">
-        <div class="stat-card accent">
-          <div class="stat-number purple">3.68</div>
-          <div class="stat-label">GPA out of 4.00</div>
-        </div>
-        <div class="stat-card accent2">
-          <div class="stat-number teal">100+</div>
-          <div class="stat-label">Students mentored</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">3</div>
-          <div class="stat-label">AI projects built</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Certifications</div>
-        </div>
-      </div>
-
-      <div class="cert-strip">
-        <div class="cert-badge ms">🪟</div>
-        <div class="cert-info">
-          <div class="cert-name">Microsoft Azure AI Fundamentals</div>
-          <div class="cert-issuer">Microsoft Certified · Sep 2025</div>
-        </div>
-        <div class="cert-score">783/1000</div>
-      </div>
-
-      <div class="cert-strip">
-        <div class="cert-badge ibm">🔵</div>
-        <div class="cert-info">
-          <div class="cert-name">Data Classification Using IBM Granite</div>
-          <div class="cert-issuer">IBM SkillsBuild · Jun 2025</div>
-        </div>
-        <div class="cert-score">✓ Pass</div>
-      </div>
+    <div class="stat-cards">
+      <div class="stat-card c1"><div class="stat-number purple">3.68</div><div class="stat-label">GPA / 4.00</div></div>
+      <div class="stat-card c2"><div class="stat-number teal">100+</div><div class="stat-label">Students mentored</div></div>
+      <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Projects built</div></div>
+      <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Certifications</div></div>
     </div>
   </div>
 </div>
 
-<div class="section-divider"></div>
+<div class="divider"></div>
 
 <!-- SKILLS -->
-<div id="skills">
-  <div class="inner">
+<div class="sw alt" id="skills">
+  <div class="si">
     <div class="section-label fade-up">Expertise</div>
-    <h2 class="section-title fade-up">Skills & Tools</h2>
-    <p class="section-desc fade-up">A combination of technical depth and communication skills developed through real projects and teaching experience.</p>
-
-    <div class="skills-grid">
-      <div class="skill-card fade-up">
-        <div class="skill-icon">🐍</div>
-        <div class="skill-title">Programming</div>
-        <div class="skill-tags">
-          <span class="tag accent">Python</span>
-          <span class="tag">Go</span>
-          <span class="tag">C++</span>
-          <span class="tag">SQL</span>
+    <h2 class="section-title fade-up">Skills & Technologies</h2>
+    <p class="section-desc fade-up">Technical depth combined with strong communication and leadership skills built through real projects and teaching.</p>
+    <div class="skills-columns">
+      <div class="skills-group fade-up">
+        <div class="sg-title">⚙️ Hard Skills</div>
+        <div class="skill-row">
+          <div class="skill-row-label">Programming Languages</div>
+          <div class="tags"><span class="tag a">Python</span><span class="tag a">Go</span><span class="tag">C++</span><span class="tag">SQL</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-label">Deep Learning Frameworks</div>
+          <div class="tags"><span class="tag b">TensorFlow</span><span class="tag b">PyTorch</span><span class="tag b">Keras</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-label">Machine Learning</div>
+          <div class="tags"><span class="tag a">Scikit-Learn</span><span class="tag">Linear Regression</span><span class="tag">Logistic Regression</span><span class="tag">Decision Tree</span><span class="tag">Random Forest</span><span class="tag">SVM</span><span class="tag">KNN</span><span class="tag">K-Means</span><span class="tag">XGBoost</span><span class="tag">Naive Bayes</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-label">AI & LLM</div>
+          <div class="tags"><span class="tag a">Ollama (Llama 3.2)</span><span class="tag a">IBM Granite</span><span class="tag b">Prompt Engineering</span><span class="tag">Azure AI</span><span class="tag">RLHF</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-label">Data & Libraries</div>
+          <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag b">Streamlit</span><span class="tag">Statistics</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-label">Tools & Platforms</div>
+          <div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Microsoft Office</span><span class="tag">Azure</span></div>
         </div>
       </div>
-      <div class="skill-card fade-up">
-        <div class="skill-icon">🤖</div>
-        <div class="skill-title">AI & Machine Learning</div>
-        <div class="skill-tags">
-          <span class="tag accent">TensorFlow</span>
-          <span class="tag">Linear Regression</span>
-          <span class="tag teal">LLM</span>
-          <span class="tag">Ollama</span>
+      <div class="skills-group fade-up">
+        <div class="sg-title">🧠 Soft Skills</div>
+        <div class="skill-row">
+          <div class="skill-row-label">Thinking & Analysis</div>
+          <div class="tags"><span class="tag b">Analytical Thinking</span><span class="tag b">Critical Thinking</span><span class="tag">Problem Solving</span><span class="tag">Attention to Detail</span></div>
         </div>
-      </div>
-      <div class="skill-card fade-up">
-        <div class="skill-icon">🧠</div>
-        <div class="skill-title">LLM & Generative AI</div>
-        <div class="skill-tags">
-          <span class="tag accent">Llama 3.2</span>
-          <span class="tag">IBM Granite</span>
-          <span class="tag teal">Prompt Engineering</span>
-          <span class="tag">Azure AI</span>
+        <div class="skill-row">
+          <div class="skill-row-label">Communication</div>
+          <div class="tags"><span class="tag b">Public Speaking</span><span class="tag">Technical Writing</span><span class="tag">Presentation</span><span class="tag">Structured Feedback</span></div>
         </div>
-      </div>
-      <div class="skill-card fade-up">
-        <div class="skill-icon">📊</div>
-        <div class="skill-title">Data & Analytics</div>
-        <div class="skill-tags">
-          <span class="tag">Data Analysis</span>
-          <span class="tag accent">Statistics</span>
-          <span class="tag">Streamlit</span>
-          <span class="tag">Visualization</span>
+        <div class="skill-row">
+          <div class="skill-row-label">Leadership & Collaboration</div>
+          <div class="tags"><span class="tag b">Team Leadership</span><span class="tag">Teamwork</span><span class="tag">Mentoring</span><span class="tag">Project Management</span></div>
         </div>
-      </div>
-      <div class="skill-card fade-up">
-        <div class="skill-icon">🌐</div>
-        <div class="skill-title">Languages</div>
-        <div class="skill-tags">
-          <span class="tag accent">Indonesian (Native)</span>
-          <span class="tag teal">English (C1 Proficient)</span>
+        <div class="skill-row">
+          <div class="skill-row-label">Work Style</div>
+          <div class="tags"><span class="tag">Independent Working</span><span class="tag b">Fast Learner</span><span class="tag">Adaptability</span><span class="tag">Time Management</span></div>
         </div>
-      </div>
-      <div class="skill-card fade-up">
-        <div class="skill-icon">🛠️</div>
-        <div class="skill-title">Tools & Platforms</div>
-        <div class="skill-tags">
-          <span class="tag">Git & GitHub</span>
-          <span class="tag">Microsoft Office</span>
-          <span class="tag accent">Azure</span>
-          <span class="tag">VS Code</span>
+        <div class="skill-row">
+          <div class="skill-row-label">Languages</div>
+          <div class="tags"><span class="tag a">Indonesian (Native)</span><span class="tag b">English (C1 Proficient)</span></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section-divider"></div>
+<div class="divider"></div>
 
 <!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label fade-up">Work</div>
-  <h2 class="section-title fade-up">Featured Projects</h2>
-  <p class="section-desc fade-up">Real AI applications built from scratch — from idea to deployment.</p>
-
-  <div class="projects-grid">
-    <div class="project-card featured fade-up">
-      <div class="project-header">
-        <div class="project-emoji">📈</div>
-        <div class="project-links">
-          <a href="https://github.com/nazhiftahta" class="project-link" target="_blank">⬡</a>
-        </div>
+<div class="sw" id="projects">
+  <div class="si">
+    <div class="section-label fade-up">Portfolio</div>
+    <h2 class="section-title fade-up">Projects</h2>
+    <p class="section-desc fade-up">Real-world applications built from scratch using AI, machine learning, and software engineering.</p>
+    <div class="projects-grid">
+      <div class="project-card featured fade-up">
+        <div class="project-header"><div class="project-emoji">📈</div><a href="https://github.com/nazhiftahta" class="project-link-btn" target="_blank">↗</a></div>
+        <div class="project-title">AI-Powered EduMetrix: Student Performance Analysis System</div>
+        <p class="project-desc">A Streamlit-based application that predicts student exam scores using Linear Regression on academic and environmental data. Integrates Ollama (Llama 3.2) to identify at-risk students and deliver personalized AI-based recommendations for educators.</p>
+        <div class="tags"><span class="tag a">Python</span><span class="tag b">Streamlit</span><span class="tag a">Llama 3.2</span><span class="tag">Linear Regression</span><span class="tag">Ollama</span></div>
+        <div class="project-date">Feb 2026 · Telkom University</div>
       </div>
-      <div class="project-title">AI-Powered EduMetrix: Student Performance Analysis System</div>
-      <p class="project-desc">A Streamlit-based application that predicts student exam scores using Linear Regression on academic and environmental data. Integrates Ollama (Llama 3.2) to provide AI-based recommendations for identifying at-risk students and delivering personalized insights.</p>
-      <div class="project-stack">
-        <span class="tag accent">Python</span>
-        <span class="tag teal">Streamlit</span>
-        <span class="tag accent">Llama 3.2</span>
-        <span class="tag">Linear Regression</span>
-        <span class="tag">Ollama</span>
+      <div class="project-card fade-up">
+        <div class="project-header"><div class="project-emoji">💼</div><a href="https://github.com/nazhiftahta" class="project-link-btn" target="_blank">↗</a></div>
+        <div class="project-title">SmartTechX AI Assistant</div>
+        <p class="project-desc">AI assistant based on IBM Granite model to analyze customer reviews and summarize cross-functional team meetings for product managers. Optimized via prompt engineering and model parameter tuning for structured, accurate stakeholder outputs.</p>
+        <div class="tags"><span class="tag a">IBM Granite</span><span class="tag b">Prompt Engineering</span><span class="tag">Python</span><span class="tag">NLP</span></div>
+        <div class="project-date">Jun 2025 · IBM × Hacktiv8</div>
       </div>
-      <div class="project-date">February 2026 · Telkom University</div>
-    </div>
-
-    <div class="project-card fade-up">
-      <div class="project-header">
-        <div class="project-emoji">💼</div>
-        <div class="project-links">
-          <a href="https://github.com/nazhiftahta" class="project-link" target="_blank">⬡</a>
-        </div>
+      <div class="project-card fade-up">
+        <div class="project-header"><div class="project-emoji">😴</div><a href="https://github.com/nazhiftahta" class="project-link-btn" target="_blank">↗</a></div>
+        <div class="project-title">NapTime: Sleep & Health Monitoring App</div>
+        <p class="project-desc">Terminal-based backend application built in Go for recording, monitoring, and analyzing daily sleep patterns and health activities. Tracks sleep history, bedtime, wake-up times, and sleep quality to support a healthier structured lifestyle.</p>
+        <div class="tags"><span class="tag a">Go</span><span class="tag">Backend</span><span class="tag b">CLI App</span><span class="tag">Health Data</span></div>
+        <div class="project-date">May 2025 · Telkom University</div>
       </div>
-      <div class="project-title">SmartTechX AI Assistant</div>
-      <p class="project-desc">AI assistant based on IBM Granite model for analyzing customer reviews and summarizing cross-functional team meetings for product managers. Optimized through prompt engineering and parameter tuning.</p>
-      <div class="project-stack">
-        <span class="tag accent">IBM Granite</span>
-        <span class="tag teal">Prompt Engineering</span>
-        <span class="tag">Python</span>
-        <span class="tag">NLP</span>
+      <div class="project-card fade-up">
+        <div class="project-header"><div class="project-emoji">🎵</div><a href="https://github.com/nazhiftahta" class="project-link-btn" target="_blank">↗</a></div>
+        <div class="project-title">Console Music Player Application</div>
+        <p class="project-desc">A C++ console-based music player storing songs from various artists, genres, albums, and years. Supports Admin and User roles. Implements multiple data structures — doubly linked list, tree, queue, and stack — with song data stored using custom record data types.</p>
+        <div class="tags"><span class="tag c">C++</span><span class="tag">Data Structures</span><span class="tag b">Linked List</span><span class="tag">Tree</span><span class="tag">Queue / Stack</span></div>
+        <div class="project-date">Telkom University</div>
       </div>
-      <div class="project-date">June 2025 · Telkom University</div>
-    </div>
-
-    <div class="project-card fade-up">
-      <div class="project-header">
-        <div class="project-emoji">😴</div>
-        <div class="project-links">
-          <a href="https://github.com/nazhiftahta" class="project-link" target="_blank">⬡</a>
-        </div>
-      </div>
-      <div class="project-title">NapTime: Sleep & Health Monitor</div>
-      <p class="project-desc">Terminal-based backend application for recording, monitoring, and analyzing daily sleep patterns and health activities. Helps users build healthier, more structured lifestyles through data tracking.</p>
-      <div class="project-stack">
-        <span class="tag accent">Python</span>
-        <span class="tag">Backend</span>
-        <span class="tag">Health Data</span>
-        <span class="tag teal">CLI App</span>
-      </div>
-      <div class="project-date">May 2025 · Telkom University</div>
     </div>
   </div>
-</section>
+</div>
 
-<div class="section-divider"></div>
+<div class="divider"></div>
 
-<!-- EXPERIENCE -->
-<div id="experience" style="background: var(--bg2); max-width: 100%; padding: 100px 60px;">
-  <div style="max-width: 1200px; margin: 0 auto;">
+<!-- WORK EXPERIENCE -->
+<div class="sw alt" id="experience">
+  <div class="si">
     <div class="section-label fade-up">Career</div>
-    <h2 class="section-title fade-up">Experience</h2>
-    <p class="section-desc fade-up">Building expertise through teaching, mentoring, and real-world projects.</p>
-
+    <h2 class="section-title fade-up">Work Experience</h2>
+    <p class="section-desc fade-up">Building professional expertise through teaching, mentoring, and real-world project delivery.</p>
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot"></div>
-        <div class="timeline-period">Sep 2025 – Jan 2026</div>
-        <div class="timeline-role">Practicum Assistant – Algorithms & Programming</div>
-        <div class="timeline-org">Informatics Faculty, Telkom University · Full-time · On-site</div>
+        <div class="timeline-period">Sep 2025 – Present</div>
+        <div class="timeline-role">Practicum Assistant — Algorithms & Programming</div>
+        <div class="timeline-org">Informatics Faculty, Telkom University · Contract · On-site</div>
         <ul class="timeline-bullets">
-          <li>Guided 100+ students in algorithm fundamentals, control structures, and Go programming</li>
-          <li>Developed practicum modules, exercises, and case studies</li>
-          <li>Provided objective assessment and constructive feedback</li>
+          <li>Guided approximately 100 students in algorithm fundamentals, control structures, and Go programming implementation</li>
+          <li>Developed practicum modules, exercises, and case studies for effective learning outcomes</li>
+          <li>Provided objective assessment and constructive feedback on assignments and exams</li>
+          <li>Supported the supervising lecturer and resolved technical difficulties for students</li>
         </ul>
       </div>
-
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
+        <div class="timeline-dot t"></div>
         <div class="timeline-period">Oct 2025 – Dec 2026</div>
-        <div class="timeline-role">Mentor & Study Group Coordinator</div>
-        <div class="timeline-org">Data Science Student Association, Telkom University · Full-time</div>
+        <div class="timeline-role">Mentor & Study Group Coordinator — Introduction to Programming</div>
+        <div class="timeline-org">Data Science Student Association, Telkom University · Full-time · On-site</div>
         <ul class="timeline-bullets">
           <li>Taught programming fundamentals to 90+ students using pseudocode and Go</li>
-          <li>Led and coordinated a team of mentors for consistent learning sessions</li>
-          <li>Designed learning materials and review sessions tailored to student needs</li>
+          <li>Led and coordinated a team of mentors for consistent, effective learning sessions</li>
+          <li>Designed tailored learning materials, exercises, and review sessions</li>
         </ul>
       </div>
-
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-period">May 2024 – Sep 2024</div>
         <div class="timeline-role">Course Coordinator & English Tutor</div>
-        <div class="timeline-org">English Easy Academy · Remote</div>
+        <div class="timeline-org">English Easy Academy · Part-time · Remote</div>
         <ul class="timeline-bullets">
-          <li>Managed online English course platform with 10+ active learners per month</li>
-          <li>Analyzed student progress using statistical methods</li>
+          <li>Managed an online English course platform with 10+ active learners per month</li>
+          <li>Analyzed student progress using statistical methods to improve teaching effectiveness</li>
         </ul>
       </div>
-
       <div class="timeline-item">
-        <div class="timeline-dot"></div>
+        <div class="timeline-dot t"></div>
         <div class="timeline-period">Jun 2024 – Jul 2024</div>
         <div class="timeline-role">Deputy Internship Coordinator & English Tutor</div>
-        <div class="timeline-org">Yanbu'ul Qur'an Boarding School 1 Pati · Internship</div>
+        <div class="timeline-org">Yanbu'ul Qur'an Boarding School 1 Pati · Internship · On-site</div>
         <ul class="timeline-bullets">
-          <li>Designed curriculum that increased student engagement by 15%</li>
-          <li>Trained teachers in communicative learning strategies</li>
+          <li>Designed a project-based curriculum that increased student engagement by 15%</li>
+          <li>Trained teachers in communicative learning strategies and interactive media usage</li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section-divider"></div>
+<div class="divider"></div>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="section-label fade-up">Academic</div>
-  <h2 class="section-title fade-up">Education & Certifications</h2>
-
-  <div class="edu-grid fade-up">
-    <div class="edu-card">
-      <div class="edu-icon">🎓</div>
-      <div class="edu-degree">Bachelor's Degree — Data Science</div>
-      <div class="edu-school">Telkom University, Bandung</div>
-      <div class="edu-meta">
-        <span class="edu-period">2024 – Present</span>
-        <span class="edu-gpa">GPA 3.68/4.00</span>
+<!-- ORGANIZATIONS -->
+<div class="sw" id="organizations">
+  <div class="si">
+    <div class="section-label fade-up">Leadership</div>
+    <h2 class="section-title fade-up">Organizations</h2>
+    <p class="section-desc fade-up">Active contributor and leader across academic and community organizations.</p>
+    <div class="org-grid">
+      <div class="org-card fade-up">
+        <div class="org-role">Chairman</div>
+        <div class="org-name">Data Science Student Association</div>
+        <div class="org-where">Telkom University</div>
+        <div class="org-period">Feb 2026 – Present</div>
       </div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-icon">📚</div>
-      <div class="edu-degree">Mathematics & Science</div>
-      <div class="edu-school">MAS Tahfidz Yanbu'ul Qur'an</div>
-      <div class="edu-meta">
-        <span class="edu-period">2020 – 2023</span>
-        <span class="edu-gpa">87.4/100 · Top 4</span>
+      <div class="org-card fade-up">
+        <div class="org-role">Committee Member</div>
+        <div class="org-name">PKKMB 2025 — Discipline & Motivation Team</div>
+        <div class="org-where">Telkom University</div>
+        <div class="org-period">May 2025 – Sep 2025</div>
       </div>
-    </div>
-  </div>
-
-  <div class="cert-cards fade-up">
-    <div class="cert-card">
-      <div class="cert-card-icon">🪟</div>
-      <div>
-        <div class="cert-card-name">Microsoft Azure AI Fundamentals (AI-900)</div>
-        <div class="cert-card-issuer">Microsoft Certified · Score: 783/1000 · Sep 2025</div>
+      <div class="org-card fade-up">
+        <div class="org-role">Vice Head — Youth & Sports</div>
+        <div class="org-name">Student Council of Ma'had Yanbu'ul Qur'an</div>
+        <div class="org-where">Yanbu'ul Qur'an Menawan Islamic Boarding School</div>
+        <div class="org-period">Aug 2021 – Sep 2022</div>
       </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-card-icon">🔵</div>
-      <div>
-        <div class="cert-card-name">Data Classification & Summarization Using IBM Granite</div>
-        <div class="cert-card-issuer">IBM SkillsBuild · Jun 2025</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-card-icon">🏆</div>
-      <div>
-        <div class="cert-card-name">2nd Place — Madrasah Science Competition</div>
-        <div class="cert-card-issuer">Integrated Mathematics · Ministry of Religious Affairs · Aug 2022</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-card-icon">👑</div>
-      <div>
-        <div class="cert-card-name">Chairman — Data Science Student Association</div>
-        <div class="cert-card-issuer">Telkom University · Feb 2026 – Present</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<div id="contact">
-  <div class="inner">
-    <div class="section-label fade-up" style="text-align:center">Get in Touch</div>
-    <h2 class="contact-title fade-up">Let's build something<br><span>remarkable together</span></h2>
-    <p class="contact-desc fade-up">Open to freelance projects, internships, and collaboration opportunities in AI, Data Science, and ML.</p>
-
-    <div class="contact-links fade-up">
-      <a href="mailto:aunillahtahta21@gmail.com" class="contact-link">✉️ aunillahtahta21@gmail.com</a>
-      <a href="https://linkedin.com/in/nazhif-tahta" class="contact-link" target="_blank">💼 LinkedIn</a>
-      <a href="https://github.com/nazhiftahta" class="contact-link" target="_blank">⚡ GitHub</a>
-    </div>
-
-    <div class="fade-up" style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-      <span class="tag teal" style="padding: 8px 20px; font-size: 14px;">📍 Bandung, Indonesia</span>
-      <span class="tag accent" style="padding: 8px 20px; font-size: 14px;">🌐 Available Remotely</span>
-      <span class="tag" style="padding: 8px 20px; font-size: 14px;">⏰ WIB (UTC+7)</span>
     </div>
   </div>
 </div>
 
-<footer>
-  <p>Designed & built by Nazhif Tahta 'Aunillah · 2026</p>
-</footer>
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<div class="sw alt" id="education">
+  <div class="si">
+    <div class="section-label fade-up">Academic</div>
+    <h2 class="section-title fade-up">Education</h2>
+    <p class="section-desc fade-up">Strong academic foundation in Data Science and Mathematics.</p>
+    <div class="edu-grid fade-up">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">Bachelor of Data Science (S1)</div>
+        <div class="edu-school">Telkom University, Bandung</div>
+        <div class="edu-meta"><span class="edu-period">2024 – 2028</span><span class="edu-gpa">GPA 3.68/4.00</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📚</div>
+        <div class="edu-degree">Mathematics & Science</div>
+        <div class="edu-school">Tahfidz Yanbu'ul Qur'an Islamic Senior High School</div>
+        <div class="edu-meta"><span class="edu-period">2020 – 2023</span><span class="edu-gpa">87.4/100 · Top 4</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS & AWARDS -->
+<div class="sw" id="certifications">
+  <div class="si">
+    <div class="section-label fade-up">Recognition</div>
+    <h2 class="section-title fade-up">Certifications & Awards</h2>
+    <p class="section-desc fade-up">Formal recognition of technical expertise and academic achievement.</p>
+    <div class="cert-grid fade-up">
+      <div class="cert-card">
+        <div class="cert-icon">🪟</div>
+        <div>
+          <div class="cert-name">Microsoft Azure AI Fundamentals (AI-900)</div>
+          <div class="cert-issuer">Microsoft Certified · Sep 2025</div>
+          <div class="cert-score">Score: 783/1000 · Pass ✓</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🔵</div>
+        <div>
+          <div class="cert-name">Data Classification & Summarization Using IBM Granite</div>
+          <div class="cert-issuer">IBM SkillsBuild · Jun 2025</div>
+          <div class="cert-score">Completed ✓</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🏆</div>
+        <div>
+          <div class="cert-name">2nd Place — Madrasah Science Competition</div>
+          <div class="cert-issuer">Integrated Mathematics · Ministry of Religious Affairs · Aug 2022</div>
+          <div class="cert-score">District Level ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="section-label fade-up" style="text-align:center">Get in Touch</div>
+  <h2 class="contact-title fade-up">Let's build something<br><span>remarkable together</span></h2>
+  <p class="contact-desc fade-up">Open to freelance projects, internships, and collaborations in AI, Data Science, and software engineering.</p>
+  <div class="contact-links fade-up">
+    <a href="mailto:aunillahtahta21@gmail.com" class="contact-link">✉️ aunillahtahta21@gmail.com</a>
+    <a href="https://linkedin.com/in/nazhif-tahta" class="contact-link" target="_blank">💼 LinkedIn</a>
+    <a href="https://github.com/nazhiftahta" class="contact-link" target="_blank">⚡ GitHub</a>
+    <a href="tel:+6282137951617" class="contact-link">📞 +62 821 3795 1617</a>
+  </div>
+  <div class="contact-meta fade-up">
+    <span class="tag b" style="padding:8px 18px;font-size:13px">📍 Bandung, Indonesia</span>
+    <span class="tag a" style="padding:8px 18px;font-size:13px">🌐 Available Remotely</span>
+    <span class="tag" style="padding:8px 18px;font-size:13px">⏰ WIB (UTC+7)</span>
+  </div>
+</div>
+
+<footer><p>Designed & built by Nazhif Tahta 'Aunillah · 2026 · Bandung, Indonesia</p></footer>
 
 <script>
-  // Intersection Observer for animations
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-up, .timeline-item').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Stagger animations
-  document.querySelectorAll('.skill-card, .project-card, .stat-card').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.08}s`;
-  });
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up, .timeline-item').forEach(el => observer.observe(el));
+  document.querySelectorAll('.project-card, .stat-card, .cert-card, .org-card').forEach((el, i) => { el.style.transitionDelay = `${i * 0.06}s`; });
 </script>
 </body>
 </html>
